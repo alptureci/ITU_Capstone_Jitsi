@@ -42,7 +42,7 @@ def load_aws_keys():
     global keys_aws
     global ACCESS_KEY
     global SECRET_KEY
-    prod_file_location='/home/jibri/aws_access.json'
+    prod_file_location='/var/www/capstone/code/aws/aws_access.json'
     dev_file_location='/Users/atureci/Documents/ITU/SWE690_CapstoneProject/JitsiCodeBase/aws/aws_access.json'
     print("Printing state: ", state)
     #print("Printing Recording file: ", recording_file)
@@ -57,6 +57,10 @@ def load_aws_keys():
         with open(prod_file_location) as f:
             keys_aws = json.load(f)
             print(keys_aws)
+            ACCESS_KEY=keys_aws['access_key']
+            #print(ACCESS_KEY)
+            SECRET_KEY=keys_aws['secret_key']
+            #print(SECRET_KEY)
 
 
 def main(argv):
