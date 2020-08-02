@@ -14,52 +14,27 @@
 </template>
 
 <script>
-const dateTimeFormat = new Intl.DateTimeFormat("en", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-  hour: "numeric",
-  minute: "numeric",
-  second: "numeric",
-  hour12: false
-});
 import ClassLink from "../components/ClassLink.vue";
 export default {
   name: "PageIndex",
   components: { ClassLink },
   data() {
     return {
-      classes: [
-        {
-          className: "Ethical Hacking",
-          classDate: this.formatDate(new Date())
-        },
-        {
-          className: "Software Architecture",
-          classDate: this.formatDate(new Date())
-        },
-        {
-          className: "Software Requirements Elicitation",
-          classDate: this.formatDate(new Date())
-        },
-        {
-          className: "Advanced Software Engineering",
-          classDate: this.formatDate(new Date())
-        },
-        {
-          className: "Software Engineering",
-          classDate: this.formatDate(new Date())
-        },
-        {
-          className: "Cybersecurity Fundamentals",
-          classDate: this.formatDate(new Date())
-        }
-      ]
+      classes: []
     };
   },
-  methods: {
-    formatDate(date) {
-      return dateTimeFormat.format(date);
+  async mounted() {
+    try {
+      let classes = await this.$axios.get("http://localhost:3000/classes");
+      this.classes = classes.data;
+      console.log("Classes", classes.data);
+    } catch (error) {
+      this.$q.notify({
+        color: "negative",
+        position: "top",
+        message: error,
+        icon: "report_problem"
+      });
     }
   }
 };
